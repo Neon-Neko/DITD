@@ -1,34 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
-[RequireComponent(typeof(PlayerController))]
 public class PlayerInput : MonoBehaviour
 {
-    public KeyCode forward = KeyCode.W;
-    public KeyCode back = KeyCode.S;
-    public KeyCode left = KeyCode.A;
-    public KeyCode right = KeyCode.D;
-    public KeyCode turnLeft = KeyCode.Q;
-    public KeyCode turnRight = KeyCode.E;
 
-    PlayerController controller;
+    PlayerMovement playerMovement;
 
-    private void Awake()
+    // Use this for initialization
+    void Start()
     {
-
-        controller = GetComponent<PlayerController>();
-
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        if (Input.GetKeyDown(forward)) controller.moveForward();
-        if (Input.GetKeyDown(back)) controller.moveBackwards();
-        if (Input.GetKeyDown(left)) controller.moveLeft();
-        if (Input.GetKeyDown(right)) controller.moveRight();
-        if (Input.GetKeyDown(turnLeft)) controller.RotateLeft();
-        if (Input.GetKeyDown(turnRight)) controller.RotateRight();
+
+        if (Input.GetKeyDown(KeyCode.W))
+            playerMovement.Move(MoveDirections.Forward);
+        if (Input.GetKeyDown(KeyCode.S))
+            playerMovement.Move(MoveDirections.Back);
+        if (Input.GetKeyDown(KeyCode.A))
+            playerMovement.Move(MoveDirections.Left);
+        if (Input.GetKeyDown(KeyCode.D))
+            playerMovement.Move(MoveDirections.Right);
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            playerMovement.Turn(true);
+        if (Input.GetKeyDown(KeyCode.E))
+            playerMovement.Turn(false);
     }
 
+    public void MoveForward()
+    {
+        playerMovement.Move(MoveDirections.Forward);
+    }
+    public void MoveBack()
+    {
+        playerMovement.Move(MoveDirections.Back);
+    }
+    public void MoveLeft()
+    {
+        playerMovement.Move(MoveDirections.Left);
+    }
+    public void MoveRight()
+    {
+        playerMovement.Move(MoveDirections.Right);
+    }
+    public void TurnRight()
+    {
+        playerMovement.Turn(false);
+    }
+    public void TurnLeft()
+    {
+        playerMovement.Turn(true);
+    }
 }
